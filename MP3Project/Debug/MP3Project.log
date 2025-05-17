@@ -1,0 +1,58 @@
+﻿  DrawMusicDialog.cpp
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(47): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(71): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(149): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(46): warning C4244: аргумент: преобразование "std::streamoff" в "const unsigned int", возможна потеря данных
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(187): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(188): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(227): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(236): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(245): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(289): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(293): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(64): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(92): warning C4018: <: несоответствие типов со знаком и без знака
+  MP3Controller.cpp
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(47): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(71): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(149): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(46): warning C4244: аргумент: преобразование "std::streamoff" в "const unsigned int", возможна потеря данных
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(187): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(188): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(227): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(236): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(245): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(289): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(293): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(64): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(92): warning C4018: <: несоответствие типов со знаком и без знака
+  MP3Project.cpp
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(47): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(71): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(149): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(46): warning C4244: аргумент: преобразование "std::streamoff" в "const unsigned int", возможна потеря данных
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(187): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(188): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(227): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(236): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(245): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(289): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(293): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(64): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(92): warning C4018: <: несоответствие типов со знаком и без знака
+  MP3ProjectView.cpp
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(47): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(71): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(149): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(46): warning C4244: аргумент: преобразование "std::streamoff" в "const unsigned int", возможна потеря данных
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(187): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(188): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(227): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(236): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(245): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(289): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(293): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(64): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(92): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода...
+  MP3Project.vcxproj -> C:\Users\admin\source\repos\MP3Project\Debug\MP3Project.exe
