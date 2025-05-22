@@ -15,9 +15,9 @@ public:
 	std::string path;
 	std::string musicName;
 	int timePaused = 0;
-	int currentTimeMusic = 0;
+	double currentTimeMusic = 0;
 	int index;
-	bool musicLoaded = false; 
+	double musicDuration;
 	MP3 file;
 
 	
@@ -73,11 +73,18 @@ public:
 	}
 	
 	
-	
-	int GetCurrentMusicTime() {
+	double getMusicDuration() {
+		return this->musicDuration;
+	}
+	Music & setMusicDuration(double sec) {
+		this->musicDuration = sec;
+		return *this;
+	}
+
+	double GetCurrentMusicTime() {
 		return this->currentTimeMusic;
 	}
-	Music& SetCurrentMusicTime(int time) {
+	Music& SetCurrentMusicTime(double time) {
 		this->currentTimeMusic = time;
 		return *this;
 	}

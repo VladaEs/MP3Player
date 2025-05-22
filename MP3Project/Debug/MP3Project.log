@@ -1,4 +1,5 @@
-﻿  MP3ProjectView.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: промежуточный каталог (Debug\) содержит файлы, которые используются совместно с другим проектом (IDD_EDITMUSICDIALOG.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  DrawMusicDialog.cpp
 c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(47): warning C4018: <: несоответствие типов со знаком и без знака
 c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(71): warning C4018: <: несоответствие типов со знаком и без знака
 c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(149): warning C4018: <: несоответствие типов со знаком и без знака
@@ -12,4 +13,20 @@ c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(295): warning C4018: <
 c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(299): warning C4018: <: несоответствие типов со знаком и без знака
 c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(64): warning C4018: <: несоответствие типов со знаком и без знака
 c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(92): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\drawmusicdialog.cpp(107): warning C4018: <: несоответствие типов со знаком и без знака
+  EditMusicDialog.cpp
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(47): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(71): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\trie.hpp(149): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(51): warning C4244: аргумент: преобразование "std::streamoff" в "const unsigned int", возможна потеря данных
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(193): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(194): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(233): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(242): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(251): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(295): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3.hpp(299): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(64): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\admin\source\repos\mp3project\mp3project\mp3controller.h(92): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода...
   MP3Project.vcxproj -> C:\Users\admin\source\repos\MP3Project\Debug\MP3Project.exe

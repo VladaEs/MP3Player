@@ -13,7 +13,7 @@
 
 #include <wmp.h>
 
-// Диалоговое окно DrawMusicDialog
+
 
 IMPLEMENT_DYNAMIC(DrawMusicDialog, CDialogEx)
 
@@ -24,6 +24,7 @@ BEGIN_MESSAGE_MAP(DrawMusicDialog, CDialogEx)
 	ON_BN_CLICKED(3002, &DrawMusicDialog::OnBtnclickedPause)
 	ON_BN_CLICKED(3003, &DrawMusicDialog::OnBtnclickedStop)
 	ON_BN_CLICKED(3004, &DrawMusicDialog::OnBtnclickedStop)
+	ON_WM_TIMER()
 	ON_WM_CLOSE()
 	ON_WM_HSCROLL()
 
@@ -42,6 +43,7 @@ void DrawMusicDialog::DoDataExchange(CDataExchange* pDX) {
 }
 void DrawMusicDialog::OnClose()
 {
+	KillTimer(5001);
 	if (pControls)
 	{
 		pControls->pause();
@@ -127,12 +129,11 @@ BOOL DrawMusicDialog::OnInitDialog()
 	// init music controlls : 
 
 	HRESULT hr = CoInitialize(NULL);
-	if (SUCCEEDED(hr))
-	{
+	if (SUCCEEDED(hr)){
 		hr = CoCreateInstance(__uuidof(WindowsMediaPlayer), NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPlayer));
-		if (SUCCEEDED(hr))
-		{
-			BSTR bstrFile = SysAllocString(L"C:\\Users\\admin\\source\\repos\\MP3Project\\Debug\\files\\image.mp3");
+		if (SUCCEEDED(hr)){
+			CString musicPath =this->ConvertToCString(m_music->GetPath());
+			BSTR bstrFile = SysAllocString(musicPath);
 			pPlayer->put_URL(bstrFile);
 			SysFreeString(bstrFile);
 			hr = pPlayer->get_controls(&pControls);
@@ -142,9 +143,16 @@ BOOL DrawMusicDialog::OnInitDialog()
 	}
 	
 
+	// get music Lenght 
+
+	
+
 	// init timer
 
 	SetTimer(5001, 1000, NULL);
+
+
+
 
 
 	return TRUE;
@@ -155,9 +163,7 @@ void DrawMusicDialog::initMusic(Music *m) {
 	std::string pathWay = m_music->GetPath();
 	LoadImageFromMemory(m_music->getTag("APIC"), this->musicImage); // creating CImage from std::vector<char> array
 
-
-
-
+		
 
 
 }
@@ -183,7 +189,6 @@ void DrawMusicDialog::OnPaint()
 	if (!musicImage.IsNull()) {
 		int imageWidth = 200;
 		int imageHeight = 200;
-
 		//int yImageStart = (int)(rect.Height() / 2) - (int)(imageHeight/2);
 		int xImageStart = (int)(rect.Width() / 2) - (int)(imageWidth / 2);
 		int yImageStart = 25;
@@ -322,12 +327,17 @@ void DrawMusicDialog::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	if (pScrollBar != nullptr && pScrollBar->GetSafeHwnd() == m_slider.GetSafeHwnd())
 	{
-		int pos = m_slider.GetPos();
+		int sliderPos = m_slider.GetPos();
+		int sliderMax = m_slider.GetRangeMax();
 
-		CString msg;
-		msg.Format(L"Позиция слайдера: %d", pos);
+		double sliderPosPerc = (sliderPos * 100) / sliderMax;
+		double exactSecond = (sliderPosPerc * m_music->getMusicDuration())/ 100;
+		
+		pControls->put_currentPosition(exactSecond);
+		//CString msg;
+		//msg.Format(L"Позиция слайдера: %d", sliderPosPerc);
 
-		AfxMessageBox((msg));
+		//AfxMessageBox((msg));
 
 	}
 
@@ -338,7 +348,35 @@ void DrawMusicDialog::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 void DrawMusicDialog::OnTimer(UINT_PTR nIDEvent) {
 	if (nIDEvent == 5001) {
-		AfxMessageBox(L"Hello");
+		IWMPMedia* pMedia = nullptr;
+		double duration = 0.0;
+
+		HRESULT hr2 = pPlayer->get_currentMedia(&pMedia);
+
+		if (SUCCEEDED(hr2) && pMedia) {
+			pMedia->get_duration(&duration);
+			m_music->setMusicDuration(duration);
+			pMedia->Release();
+		}
+		WMPPlayState state;
+		pPlayer->get_playState(&state);
+		
+		if (state == wmppsPlaying) {
+			
+			int sliderMin = 0;
+			int sliderMax = m_slider.GetRangeMax();
+
+			double musicSeconds = 0;
+			pControls->get_currentPosition(&musicSeconds);
+			m_music->SetCurrentMusicTime(musicSeconds);
+			int sliderPos = 0;
+			if (m_music->getMusicDuration() > 0.0){
+				sliderPos = (int)((musicSeconds / m_music->getMusicDuration()) * sliderMax);
+			}
+			m_slider.SetPos(sliderPos);
+			
+		}
+
 	}
 }
 

@@ -42,6 +42,8 @@ public:
 	CImage musicImage;
 	CButton m_buttons[4]; // start, stop, pause, edit btns
 	CSliderCtrl m_slider;
+	
+
 
 	IWMPPlayer* pPlayer = nullptr;
 	IWMPControls* pControls = nullptr;

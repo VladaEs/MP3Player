@@ -24,6 +24,7 @@
     <Keyword>MFCProj</Keyword>
     <RootNamespace>MP3Project</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>MP3Project</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -190,6 +191,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DrawMusicDialog.h" />
+    <ClInclude Include="EditMusicDialog.h" />
     <ClInclude Include="FileSystemHandler.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="id3.hpp" />
@@ -208,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DrawMusicDialog.cpp" />
+    <ClCompile Include="EditMusicDialog.cpp" />
     <ClCompile Include="id3.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MP3Controller.cpp" />
