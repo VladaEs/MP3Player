@@ -26,7 +26,7 @@ public:
 	CString MusicDirectory;
 	FileSystemHandler fileSystemHandler;
 	MP3Controller mp3Controller;
-	DrawMusicDialog dlg;
+	//DrawMusicDialog dlg;
 
 public:
 

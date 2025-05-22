@@ -9,58 +9,341 @@
 #include "mp3.hpp"
 #include "Music.hpp"
 #include "MP3Controller.h"
+#include <shlwapi.h>
+
+#include <wmp.h>
+
 // Диалоговое окно DrawMusicDialog
 
 IMPLEMENT_DYNAMIC(DrawMusicDialog, CDialogEx)
 
+
+BEGIN_MESSAGE_MAP(DrawMusicDialog, CDialogEx)
+	ON_WM_PAINT()
+	ON_BN_CLICKED(3001, &DrawMusicDialog::OnBtnclickedPlay)
+	ON_BN_CLICKED(3002, &DrawMusicDialog::OnBtnclickedPause)
+	ON_BN_CLICKED(3003, &DrawMusicDialog::OnBtnclickedStop)
+	ON_BN_CLICKED(3004, &DrawMusicDialog::OnBtnclickedStop)
+	ON_WM_CLOSE()
+	ON_WM_HSCROLL()
+
+END_MESSAGE_MAP()
+
 DrawMusicDialog::DrawMusicDialog(CWnd* pParent)
 	: CDialogEx(IDD_MUSICDIALOG, pParent)  // Инициализируем указатель как nullptr
 {
-	
+
 }
 
 // Конструктор с параметром Music
 
-
-DrawMusicDialog::~DrawMusicDialog(){
-	
-}
-
-void DrawMusicDialog::DoDataExchange(CDataExchange* pDX){
+void DrawMusicDialog::DoDataExchange(CDataExchange* pDX) {
 	CDialogEx::DoDataExchange(pDX);
 }
+void DrawMusicDialog::OnClose()
+{
+	if (pControls)
+	{
+		pControls->pause();
+		pControls->Release();
+		pControls = nullptr;
+	}
+	if (pPlayer)
+	{
+		pPlayer->close();
+		pPlayer->Release();
+		pPlayer = nullptr;
+	}
+	if (pSettings) {
+
+		pSettings->Release();
+		pSettings = nullptr;
+	}
+	AfxMessageBox(L"Закрываем окно, освобождаем ресурсы...");
+
+	
+	CDialogEx::OnClose();
+}
+
+DrawMusicDialog::~DrawMusicDialog() {
+	
+	if (pControls)
+	{
+		pControls->pause();
+		pControls->Release();
+		pControls = nullptr;
+	}
+	if (pPlayer)
+	{
+		pPlayer->close();
+		pPlayer->Release();
+		pPlayer = nullptr;
+	}
+	if (pSettings) {
+
+		pSettings->Release();
+		pSettings = nullptr;
+	}
+
+}
 
 
-BEGIN_MESSAGE_MAP(DrawMusicDialog, CDialogEx)
-	ON_WM_PAINT()
-END_MESSAGE_MAP()
 
-void DrawMusicDialog::ReadMusic() {
-	this->m_music->loadMusic();
 
+BOOL DrawMusicDialog::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	int buttonsStartX = 20;
+	int buttonsStartY = 300;
+	int buttonWidth = 100;
+	int buttonHeight = 50;
+	int margin = 20;
+	std::vector<std::string> buttonNames = { "Play", "Pause" , "Edit" };
+
+	int lastX = 0;
+	for (int i = 0; i < buttonNames.size(); i++) {
+		int x = buttonsStartX + i * (buttonWidth + margin);
+		int y = buttonsStartY;
+		CRect rect(x, y, x + buttonWidth, y + buttonHeight);
+		m_buttons[i].Create(ConvertToCString(buttonNames[i]), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, rect, this, 3001 + i);
+	}
+
+	CRect rect;
+	GetClientRect(&rect);
+	int y = buttonsStartY + buttonHeight + margin;
+	CRect sliderRect(25, buttonsStartY + buttonHeight + margin, rect.Width() - 25, buttonsStartY + buttonHeight + margin * 3);
+	m_slider.Create(
+		WS_CHILD | WS_VISIBLE | TBS_AUTOTICKS | TBS_HORZ, // стиль
+		sliderRect,
+		this,
+		4001); 
+
+	m_slider.SetRange(0, 100);    // от 0 до 100
+	m_slider.SetPos(0);           // начальная позиция
+	m_slider.SetTicFreq(1);      // шаг между делениями
+
+
+	// init music controlls : 
+
+	HRESULT hr = CoInitialize(NULL);
+	if (SUCCEEDED(hr))
+	{
+		hr = CoCreateInstance(__uuidof(WindowsMediaPlayer), NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPlayer));
+		if (SUCCEEDED(hr))
+		{
+			BSTR bstrFile = SysAllocString(L"C:\\Users\\admin\\source\\repos\\MP3Project\\Debug\\files\\image.mp3");
+			pPlayer->put_URL(bstrFile);
+			SysFreeString(bstrFile);
+			hr = pPlayer->get_controls(&pControls);
+			pPlayer->get_settings(&pSettings);
+			//pSettings->put_repeat(VARIANT_TRUE);
+		}
+	}
+	
+
+	// init timer
+
+	SetTimer(5001, 1000, NULL);
+
+
+	return TRUE;
 }
 void DrawMusicDialog::initMusic(Music *m) {
 	this->m_music = m;
+	m_music->loadMusic();
+	std::string pathWay = m_music->GetPath();
+	LoadImageFromMemory(m_music->getTag("APIC"), this->musicImage); // creating CImage from std::vector<char> array
+
+
+
+
+
+
 }
+
+
+
 void DrawMusicDialog::OnPaint()
 {
-	CPaintDC dc(this); 
+
+	CPaintDC dc(this);
 	CRect rect;
 	GetClientRect(&rect);
-
+	dc.FillSolidRect(&rect, RGB(255, 255, 255));
 	CString text = L"AAA";
+
 	dc.DrawText(text, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
 	// draw BG
-	dc.FillSolidRect(&rect, RGB(255, 255, 255));
-	//CImage image;
-	m_music->loadMusic();
 
-	//std::vector<char> image = m_music->getMusicNameFile();
-	int a = 10;
 
-	
+
+	// -=-=-=-=-=-=-=-=-=-=-=-=-=-= draw Image -=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	if (!musicImage.IsNull()) {
+		int imageWidth = 200;
+		int imageHeight = 200;
+
+		//int yImageStart = (int)(rect.Height() / 2) - (int)(imageHeight/2);
+		int xImageStart = (int)(rect.Width() / 2) - (int)(imageWidth / 2);
+		int yImageStart = 25;
+		CRect imageRect(xImageStart, yImageStart, xImageStart + imageWidth, yImageStart + imageHeight);
+		musicImage.Draw(dc.m_hDC, imageRect);
+	}
+	// -=-=-=-=-=-=-=-=-=-=-=-=-=-= Finish draw Image -=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+
+
+
+
+	CRect imageRect2(10, 10, 210, 210);
+	dc.DrawText(text, &imageRect2, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+
+
+
 }
+
+HRESULT DrawMusicDialog::LoadImageFromMemory(const std::vector<char>& rawData, CImage& outImage)
+{
+	if (rawData.empty())
+		return E_INVALIDARG;
+
+	// --- Поиск сигнатуры изображения ---
+	const std::vector<std::vector<char>> signatures = {
+		{ '\xFF', '\xD8' },                   // JPEG
+		{ '\x89', 'P',  'N',  'G' },          // PNG
+		{ 'B',   'M' },                       // BMP
+		{ 'G',   'I',  'F' }                  // GIF
+	};
+
+	auto begin = rawData.begin();
+	auto end = rawData.end();
+	auto found = end;
+
+	for (const auto& sig : signatures)
+	{
+		auto it = std::search(begin, end, sig.begin(), sig.end());
+		if (it != end && (found == end || it < found))
+		{
+			found = it; // находим самое раннее валидное начало
+		}
+	}
+
+	if (found == end) {
+		// AfxMessageBox(L"Формат изображения не распознан");
+		return E_FAIL;
+	}
+
+	std::vector<char> cleanData(found, end);
+
+	// --- Создаём HGLOBAL ---
+	HGLOBAL hMem = ::GlobalAlloc(GMEM_MOVEABLE, cleanData.size());
+	if (!hMem)
+		return E_OUTOFMEMORY;
+
+	void* pMem = ::GlobalLock(hMem);
+	if (!pMem) {
+		::GlobalFree(hMem);
+		return E_FAIL;
+	}
+
+	memcpy(pMem, cleanData.data(), cleanData.size());
+	::GlobalUnlock(hMem);
+
+	// --- Создаём IStream ---
+	CComPtr<IStream> spStream;
+	HRESULT hr = ::CreateStreamOnHGlobal(hMem, TRUE, &spStream);
+	if (FAILED(hr)) {
+		::GlobalFree(hMem);
+		return hr;
+	}
+
+	// --- Загружаем изображение ---
+	hr = outImage.Load(spStream);
+	if (FAILED(hr) || outImage.IsNull()) {
+		// AfxMessageBox(L"Не удалось загрузить изображение");
+		return E_FAIL;
+	}
+
+	return S_OK;
+}
+
+
+
+void DrawMusicDialog::OnBtnclickedPlay()
+{
+	WMPPlayState state;
+	pPlayer->get_playState(&state);
+	if (state == wmppsPlaying){
+		pControls->pause();
+	}
+	else if (state == wmppsPaused || state == wmppsStopped){
+		pControls->play();
+	}
+
+	//pControls->play();
+	//pControls->Release();
+}
+
+void DrawMusicDialog::OnBtnclickedPause()
+{
+	WMPPlayState state;
+	pPlayer->get_playState(&state);
+	if (state == wmppsPlaying)
+	{
+		pControls->pause();
+	}
+	else if (state == wmppsPaused || state == wmppsStopped)
+	{
+		pControls->play();
+	}
+	AfxMessageBox(L"Pause clicked");
+
+}
+
+void DrawMusicDialog::OnBtnclickedStop()
+{
+
+	AfxMessageBox(L"Stop clicked");
+
+}
+
+
+void DrawMusicDialog::OnBtnclickedEdit()
+{
+	AfxMessageBox(L"Edit clicked");
+
+}
+
+
+void DrawMusicDialog::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
+
+	if (pScrollBar != nullptr && pScrollBar->GetSafeHwnd() == m_slider.GetSafeHwnd())
+	{
+		int pos = m_slider.GetPos();
+
+		CString msg;
+		msg.Format(L"Позиция слайдера: %d", pos);
+
+		AfxMessageBox((msg));
+
+	}
+
+	CDialog::OnHScroll(nSBCode, nPos, pScrollBar);
+
+}
+
+
+void DrawMusicDialog::OnTimer(UINT_PTR nIDEvent) {
+	if (nIDEvent == 5001) {
+		AfxMessageBox(L"Hello");
+	}
+}
+
+
+
 CString DrawMusicDialog::ConvertToCString(std::string str) {
 	CString cstr(str.c_str());
 	return cstr;

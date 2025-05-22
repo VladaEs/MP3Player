@@ -14,7 +14,8 @@ public:
 
 	std::string path;
 	std::string musicName;
-	int timePaused = 0; 
+	int timePaused = 0;
+	int currentTimeMusic = 0;
 	int index;
 	bool musicLoaded = false; 
 	MP3 file;
@@ -25,6 +26,7 @@ public:
 	Music(std::string p, std::string name) {
 		this->path = p;
 		this->musicName = name;
+		
 	}
 	Music(CWnd* parent,std::string p, std::string name, int i) {
 		this->path = p;
@@ -67,19 +69,29 @@ public:
 	}
 	Music & SetTimePaused(int t) {
 		this->timePaused = t; 
+		return *this;
 	}
 	
 	
 	
-	
+	int GetCurrentMusicTime() {
+		return this->currentTimeMusic;
+	}
+	Music& SetCurrentMusicTime(int time) {
+		this->currentTimeMusic = time;
+		return *this;
+	}
 	int GetTimePaused() {
 		return this->timePaused;
 	}
 	std::string GetPath() {
-		return this->musicName;
+		return this->path;
 	}
 	std::string GetMusicName() {
 		return this->musicName;
+	}
+	std::vector<char> getTag(std::string tag) {
+		return file.getTag(tag);
 	}
 	bool loadMusic() {
 		return file.read(path.c_str());
@@ -87,12 +99,11 @@ public:
 	void changeMusicName(std::string data) {
 		file.setTag("TIT2", convertData(data));
 	}
-	//std::vector<char> getMusicNameFile() {
-		
-			
-			//std::vector<char> name2 = file.getTag("TIT2");
-			//return file.getTag("TIT2");
-	//}
+	std::vector<char> getMusicNameFile() {
+
+		std::vector<char> name2 = file.getTag("TIT2");
+		return file.getTag("TIT2");
+	}
 
 	std::vector<char> convertData(std::string data) {
 		return std::vector<char>(data.begin(), data.end());

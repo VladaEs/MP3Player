@@ -206,8 +206,10 @@ void CMP3ProjectView::OnIconClicked(UINT nID){
 	
 	
 	mp3Controller.MusicCollection[ind].loadMusic();
-	//dlg.initMusic(&mp3Controller.MusicCollection[ind]);
+	DrawMusicDialog dlg;
+	dlg.initMusic(&mp3Controller.MusicCollection[ind]);
 	dlg.DoModal();
+
 
 
 }
