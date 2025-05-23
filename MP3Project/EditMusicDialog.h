@@ -26,7 +26,7 @@ public:
 
 	// Данные диалогового окна
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_MUSICDIALOG };
+	enum { IDD = IDD_EDITMUSICDIALOG};
 #endif
 
 protected:
@@ -37,10 +37,14 @@ protected:
 public:
 	bool MusicLoaded = false;
 	Music* m_music;
-
+	CString musicNameInput;
+	CString authorNameInput;
+	std::vector<char> newImage;
 	afx_msg void OnPaint();
 	void initMusic(Music *m);
-
+	std::vector<char> ReadFileAsBytes(const std::string& path);
+	std::string ConvertCStringToString(CString);
+	std::vector<char> ConvertCStringToVectorChar(CString str);
 	afx_msg void OnClose();
 	
 
@@ -50,8 +54,11 @@ public:
 
 
 	CString ConvertToCString(std::string str);
-
-
+	std::string ConvertCharVectToString(std::vector<char> &data);
+	std::string cleanTag(std::vector<char>& data);
+	afx_msg void OnEnChangeMusicname();
+	afx_msg void OnEnChangeMusicauthor();
+	afx_msg void OnBnClickedChangeimage();
 };
 
 

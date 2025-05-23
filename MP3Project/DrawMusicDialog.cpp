@@ -10,9 +10,9 @@
 #include "Music.hpp"
 #include "MP3Controller.h"
 #include <shlwapi.h>
-
+#include "EditMusicDialog.h"
 #include <wmp.h>
-
+#include "Helpers.h"
 
 
 IMPLEMENT_DYNAMIC(DrawMusicDialog, CDialogEx)
@@ -22,8 +22,8 @@ BEGIN_MESSAGE_MAP(DrawMusicDialog, CDialogEx)
 	ON_WM_PAINT()
 	ON_BN_CLICKED(3001, &DrawMusicDialog::OnBtnclickedPlay)
 	ON_BN_CLICKED(3002, &DrawMusicDialog::OnBtnclickedPause)
-	ON_BN_CLICKED(3003, &DrawMusicDialog::OnBtnclickedStop)
-	ON_BN_CLICKED(3004, &DrawMusicDialog::OnBtnclickedStop)
+	ON_BN_CLICKED(3003, &DrawMusicDialog::OnBtnclickedEdit)
+	//ON_BN_CLICKED(3004, &DrawMusicDialog::OnBtnclickedStop)
 	ON_WM_TIMER()
 	ON_WM_CLOSE()
 	ON_WM_HSCROLL()
@@ -61,7 +61,7 @@ void DrawMusicDialog::OnClose()
 		pSettings->Release();
 		pSettings = nullptr;
 	}
-	AfxMessageBox(L"Закрываем окно, освобождаем ресурсы...");
+	//AfxMessageBox(L"Закрываем окно, освобождаем ресурсы...");
 
 	
 	CDialogEx::OnClose();
@@ -97,7 +97,7 @@ BOOL DrawMusicDialog::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	int buttonsStartX = 20;
-	int buttonsStartY = 300;
+	int buttonsStartY = 350;
 	int buttonWidth = 100;
 	int buttonHeight = 50;
 	int margin = 20;
@@ -177,9 +177,10 @@ void DrawMusicDialog::OnPaint()
 	CRect rect;
 	GetClientRect(&rect);
 	dc.FillSolidRect(&rect, RGB(255, 255, 255));
-	CString text = L"AAA";
+	
+	//CString text = L"AAA";
 
-	dc.DrawText(text, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	//dc.DrawText(text, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
 	// draw BG
 
@@ -199,15 +200,22 @@ void DrawMusicDialog::OnPaint()
 
 
 
+	Helpers help;
 
-
-
-	CRect imageRect2(10, 10, 210, 210);
-	dc.DrawText(text, &imageRect2, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-
-
-
-
+	CFont font;
+	font.CreatePointFont(120, _T("Segoe UI"));
+	CFont* pOldFont = dc.SelectObject(&font);
+	std::string MusicNameCleaned = help.cleanTag(m_music->getTag("TIT2"));
+	CString MusicName = help.ConvertToCString(MusicNameCleaned);
+	
+	CRect imageRect2(25, 250, rect.Width()-25, 270);
+	dc.DrawText(MusicName, &imageRect2, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	
+	CRect imageRect3(25, 280, rect.Width() - 25, 300);
+	std::string authorString = help.cleanTag(m_music->getTag("TPE1"));
+	CString author = help.ConvertToCString(authorString);
+	dc.DrawText(author, &imageRect3, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	dc.SelectObject(pOldFont);
 }
 
 HRESULT DrawMusicDialog::LoadImageFromMemory(const std::vector<char>& rawData, CImage& outImage)
@@ -318,8 +326,10 @@ void DrawMusicDialog::OnBtnclickedStop()
 
 void DrawMusicDialog::OnBtnclickedEdit()
 {
-	AfxMessageBox(L"Edit clicked");
-
+	EditMusicDialog dlg;
+	dlg.initMusic(m_music);
+	pPlayer->close();
+	dlg.DoModal();
 }
 
 

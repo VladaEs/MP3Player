@@ -157,8 +157,9 @@ public:
 			return std::vector<char>();
 		}
 		return id3v2Data[tagName];
-
 	}
+
+
 	// set tag
 	void setTag(std::string tag, std::vector<char> data) {
 		id3v2Data[tag] = data;

@@ -41,6 +41,7 @@ public:
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления
+	void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar * pScrollBar);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 	virtual void OnInitialUpdate(); // вызывается в первый раз после конструктора

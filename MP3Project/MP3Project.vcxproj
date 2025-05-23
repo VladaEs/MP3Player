@@ -194,6 +194,7 @@
     <ClInclude Include="EditMusicDialog.h" />
     <ClInclude Include="FileSystemHandler.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="id3.hpp" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="mp3.hpp" />
@@ -211,6 +212,7 @@
   <ItemGroup>
     <ClCompile Include="DrawMusicDialog.cpp" />
     <ClCompile Include="EditMusicDialog.cpp" />
+    <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="id3.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MP3Controller.cpp" />

@@ -10,12 +10,14 @@
 namespace fs = std::filesystem;
 class MP3Controller{
 public:
+	
 	int padding = 20;
 	std::vector<CButton*> g_buttons;
 	std::vector<Music> MusicCollection;
 	const int BUTTON_ID = 1000;
 	int activeMusicIndex = 0;
 	MP3Controller() { ; }
+	int windowWidth = 0;
 	int _lastX = 0; 
 	int _lastY = 0;
 	int _initX = 0;
@@ -23,7 +25,12 @@ public:
 	const int blockHeight = 180;
 	bool windLoaded = false;
 	
-
+	int getContentHeight() {
+		return this->_lastY;
+	}
+	int getContentWidth(){
+		return this->windowWidth;
+	}
 	MP3Controller(std::vector<std::string> dataList) {
 		for (const auto& fullPath : dataList) {
 			std::string filename = fs::path(fullPath).stem().string();
@@ -80,10 +87,17 @@ public:
 		}
 	}
 	void drawPlayer(CWnd* parent) {
+
+
+
 		if (!parent) return;
 		CClientDC dc(parent);
 		CRect clientRect;
 		parent->GetClientRect(&clientRect);
+
+		//dc.FillSolidRect(&clientRect, ::GetSysColor(COLOR_WINDOW));
+
+		windowWidth = clientRect.Width();
 		int initX = _initX;
 		int initY = _initY;
 		int lastX = padding;
@@ -97,6 +111,7 @@ public:
 			drawMusicBlock(&dc, musicBlock, i);
 			lastY += blockHeight + padding;
 		}
+		_lastY = lastY;
 		
 	}
 

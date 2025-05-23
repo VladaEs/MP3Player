@@ -55,7 +55,15 @@ public:
 		}
 		return *this;
 	}
-
+	std::string cleanTag(std::vector<char>& data) {
+		std::string res;
+		for (int i = 0; i < data.size(); i++) {
+			if (data[i] >= 32 && data[i] <= 128) {
+				res += data[i];
+			}
+		}
+		return res;
+	}
 
 
 
@@ -100,6 +108,10 @@ public:
 	std::vector<char> getTag(std::string tag) {
 		return file.getTag(tag);
 	}
+	bool setTag(std::string tag, std::vector<char> data) {
+		file.setTag(tag, data);
+		return true;
+	}
 	bool loadMusic() {
 		return file.read(path.c_str());
 	}
@@ -116,7 +128,8 @@ public:
 		return std::vector<char>(data.begin(), data.end());
 	}
 	bool saveFile() {
-		file.write(path.c_str());
+		bool worked = file.write(path.c_str());
+		return worked;
 	}
 
 	

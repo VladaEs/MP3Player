@@ -72,13 +72,6 @@ void CMP3ProjectView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-
-
-
-
-		
-		
-		
 		
 		//file.read("files/Rubi Аромат твоих волос.mp3");
 		//file.write("files/new minecraft1.mp3");
@@ -87,13 +80,23 @@ void CMP3ProjectView::OnDraw(CDC* pDC)
 		
 		
 		mp3Controller.drawPlayer(this);
-
+		SetScrollSizes(MM_TEXT, CSize(mp3Controller.getContentWidth(), mp3Controller.getContentHeight()));
 
 
 
 
 	// TODO: добавьте здесь код отрисовки для собственных данных
 }
+
+void CMP3ProjectView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	CScrollView::OnVScroll(nSBCode, nPos, pScrollBar);
+
+	// Принудительно перерисовать весь клиент
+	Invalidate();  // или InvalidateRect(NULL)
+	UpdateWindow();
+}
+
 
 void CMP3ProjectView::OnInitialUpdate()
 {
@@ -203,8 +206,6 @@ void CMP3ProjectView::OnFolderSelectfolder(){
 void CMP3ProjectView::OnIconClicked(UINT nID){
 	
 	int ind = nID - mp3Controller.GetButtonInitID();
-	
-	
 	mp3Controller.MusicCollection[ind].loadMusic();
 	DrawMusicDialog dlg;
 	dlg.initMusic(&mp3Controller.MusicCollection[ind]);
